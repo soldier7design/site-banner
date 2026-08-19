@@ -28,13 +28,24 @@ require_once SB_PATH . 'includes/class-sb-frontend.php';
  * every site running this plugin will see an update in wp-admin.
  */
 $sbUpdateChecker = PucFactory::buildUpdateChecker(
-	'https://github.com/yourusername/site-banner/',
+	'https://github.com/soldier7design/site-banner/',
 	__FILE__,
 	'site-banner'
 );
 // Point at the "main" branch's releases/tags. If you rename your default
 // branch, update this to match.
 $sbUpdateChecker->setBranch( 'main' );
+
+/**
+ * Private repo authentication. Define SB_GH_TOKEN in each site's
+ * wp-config.php (never commit a real token into this file, since this file
+ * itself lives in the repo). One token works across every site:
+ *
+ *   define( 'SB_GH_TOKEN', 'github_pat_xxxxxxxxxxxxxxxxxxxx' );
+ */
+if ( defined( 'SB_GH_TOKEN' ) && SB_GH_TOKEN ) {
+	$sbUpdateChecker->setAuthentication( SB_GH_TOKEN );
+}
 
 /**
  * Default settings shape. Every setting the plugin knows about lives here
