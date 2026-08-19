@@ -65,6 +65,7 @@ a.sb-banner-inner { cursor: pointer; }
 	cursor: pointer;
 	padding: 8px;
 	opacity: .8;
+	user-select: none;
 }
 .sb-banner-close:hover { opacity: 1; }
 
@@ -85,8 +86,15 @@ a.sb-banner-inner { cursor: pointer; }
 	align-items: center;
 	justify-content: center;
 	box-shadow: 0 2px 8px rgba(0,0,0,.15);
+	user-select: none;
 }
 .sb-reopen.sb-visible { display: flex; }
+
+.sb-banner-close:focus,
+.sb-reopen:focus {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
 
 @media (max-width: 600px) {
 	#sb-banner { padding: 10px 40px 10px 12px; font-size: 13px; }

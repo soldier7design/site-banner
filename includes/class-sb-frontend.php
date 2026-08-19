@@ -91,9 +91,9 @@ class SB_Frontend {
 					<?php endif; ?>
 				</span>
 			</<?php echo $tag; ?>>
-			<button type="button" class="sb-banner-close" aria-label="Close notification" style="color:<?php echo esc_attr( $o['text_color'] ); ?>;">&times;</button>
+			<div class="sb-banner-close" role="button" tabindex="0" aria-label="Close notification" style="color:<?php echo esc_attr( $o['text_color'] ); ?>;">&times;</div>
 		</div>
-		<button type="button" id="sb-reopen" class="sb-reopen" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>; color:<?php echo esc_attr( $o['text_color'] ); ?>;" aria-label="Show notification">!</button>
+		<div id="sb-reopen" class="sb-reopen" role="button" tabindex="0" aria-label="Show notification" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>; color:<?php echo esc_attr( $o['text_color'] ); ?>;">!</div>
 		<?php
 	}
 }

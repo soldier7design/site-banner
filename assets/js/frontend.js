@@ -54,6 +54,21 @@
 		// Position the reopen badge under the admin bar (same rule the banner
 		// follows) and reserve its height so it never overlaps whatever the
 		// theme's own header has sitting in the top-right corner.
+		// Divs, not buttons, on purpose (avoids inheriting a theme's global
+		// `button { ... }` reset styles). That means click still works out of
+		// the box, but keyboard activation (Enter/Space) needs to be added
+		// back in manually since a div isn't a real button.
+		function onActivate( el, handler ) {
+			if ( ! el ) return;
+			el.addEventListener( 'click', handler );
+			el.addEventListener( 'keydown', function ( e ) {
+				if ( e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar' ) {
+					e.preventDefault();
+					handler( e );
+				}
+			} );
+		}
+
 		function positionReopen() {
 			if ( ! reopen ) return;
 			reopen.style.top = adminBarOffset() + 'px';
@@ -110,7 +125,7 @@
 		}
 
 		if ( closeBtn ) {
-			closeBtn.addEventListener( 'click', function ( e ) {
+			onActivate( closeBtn, function ( e ) {
 				e.preventDefault();
 				e.stopPropagation();
 				setCookie( cookieName, '1', 180 );
@@ -119,7 +134,7 @@
 		}
 
 		if ( reopen ) {
-			reopen.addEventListener( 'click', function () {
+			onActivate( reopen, function () {
 				setCookie( cookieName, '', -1 );
 				showBanner();
 			} );
