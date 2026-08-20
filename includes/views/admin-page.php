@@ -75,6 +75,15 @@
 		</div>
 
 		<div class="sb-card">
+			<h2>Positioning</h2>
+			<label>
+				<input type="checkbox" name="fixed_position" value="1" <?php checked( $o['fixed_position'], 1 ); ?> />
+				Fix the banner to the top of the page
+			</label>
+			<p class="description">When on, the banner (and the small indicator that replaces it once closed) stays pinned to the top of the screen as visitors scroll, and pushes the site's own fixed header down out of the way. When off, it sits with the page content and scrolls away normally.</p>
+		</div>
+
+		<div class="sb-card">
 			<h2>Display Schedule</h2>
 			<label>
 				<input type="checkbox" id="sb-schedule-enabled" name="schedule_enabled" value="1" <?php checked( $o['schedule_enabled'], 1 ); ?> />

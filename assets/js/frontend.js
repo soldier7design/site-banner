@@ -19,7 +19,9 @@
 		if ( ! banner ) return;
 
 		var cookieName = ( window.SiteBannerData && window.SiteBannerData.cookieName ) || 'sb_dismissed';
+		var fixedMode  = !! ( window.SiteBannerData && window.SiteBannerData.fixed );
 		var closeBtn   = banner.querySelector( '.sb-banner-close' );
+		var REOPEN_HEIGHT = 46; // matches .sb-reopen's box height in frontend.css
 
 		// Divs, not buttons, on purpose (avoids inheriting a theme's global
 		// `button { ... }` reset styles). That means click still works out of
@@ -36,24 +38,69 @@
 			} );
 		}
 
-		// Nothing here is fixed anymore, so there's no viewport math to do.
-		// Both the banner and the reopen indicator sit in normal document
-		// flow at the very top of the page and scroll away like anything
-		// else. WordPress's own admin bar spacing and the theme's own
-		// header just fall in line naturally underneath.
+		// The reopen indicator is always position:absolute or position:fixed
+		// (never normal flow), and neither of those automatically clears the
+		// WordPress admin bar the way normal-flow content does. So this
+		// always needs to measure the admin bar and offset for it, in both
+		// fixed and non-fixed banner modes. Reads the real height rather
+		// than assuming 32px/46px, so it adapts on its own at any screen
+		// size, including WordPress's own mobile admin bar breakpoint.
+		function adminBarOffset() {
+			var bar = document.getElementById( 'wpadminbar' );
+			if ( bar && window.getComputedStyle( bar ).position === 'fixed' ) {
+				return bar.offsetHeight;
+			}
+			return 0;
+		}
+
+		function positionReopen() {
+			if ( reopen ) reopen.style.top = adminBarOffset() + 'px';
+		}
+
+		// Fixed mode only: nudge any other fixed/sticky page elements pinned
+		// to the top down by the given offset, so the site's own header
+		// never sits hidden underneath the banner or the reopen indicator.
+		function adjustFixedElements( offset ) {
+			if ( ! fixedMode ) return;
+			var all = document.body.querySelectorAll( '*' );
+			for ( var i = 0; i < all.length; i++ ) {
+				var el = all[ i ];
+				if ( el === banner || banner.contains( el ) || el === reopen || el.id === 'wpadminbar' ) continue;
+				var cs = window.getComputedStyle( el );
+				if ( cs.position === 'fixed' || cs.position === 'sticky' ) {
+					var top = parseFloat( cs.top );
+					if ( ! isNaN( top ) && top >= 0 && top < 5 ) {
+						if ( el.dataset.sbBaseTop === undefined ) {
+							el.dataset.sbBaseTop = top;
+						}
+						el.style.top = ( parseFloat( el.dataset.sbBaseTop ) + offset ) + 'px';
+					}
+				}
+			}
+		}
 
 		function showBanner() {
+			if ( fixedMode ) {
+				banner.style.top = adminBarOffset() + 'px';
+			}
 			banner.style.display = 'flex';
 			requestAnimationFrame( function () {
 				banner.classList.add( 'sb-visible' );
 			} );
+			if ( fixedMode ) {
+				setTimeout( function () {
+					adjustFixedElements( banner.offsetHeight );
+				}, 60 );
+			}
 			if ( reopen ) reopen.style.display = 'none';
 		}
 
 		function hideBanner( animate ) {
 			function finish() {
 				banner.style.display = 'none';
-				if ( reopen ) reopen.style.display = 'flex';
+				adjustFixedElements( REOPEN_HEIGHT );
+				positionReopen();
+				if ( reopen ) reopen.style.display = 'block';
 			}
 			if ( animate ) {
 				banner.classList.remove( 'sb-visible' );
@@ -68,7 +115,9 @@
 
 		if ( getCookie( cookieName ) ) {
 			banner.style.display = 'none';
-			if ( reopen ) reopen.style.display = 'flex';
+			adjustFixedElements( REOPEN_HEIGHT );
+			positionReopen();
+			if ( reopen ) reopen.style.display = 'block';
 		} else {
 			showBanner();
 		}
@@ -88,5 +137,16 @@
 				showBanner();
 			} );
 		}
+
+		window.addEventListener( 'resize', function () {
+			positionReopen();
+			if ( ! fixedMode ) return;
+			if ( banner.style.display !== 'none' ) {
+				banner.style.top = adminBarOffset() + 'px';
+				adjustFixedElements( banner.offsetHeight );
+			} else {
+				adjustFixedElements( REOPEN_HEIGHT );
+			}
+		} );
 	} );
 })();

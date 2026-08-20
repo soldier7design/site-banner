@@ -82,6 +82,7 @@ class SB_Admin {
 		$o['publish_mode']        = ( isset( $_POST['publish_mode'] ) && $_POST['publish_mode'] === 'scheduled' ) ? 'scheduled' : 'now';
 		$o['publish_datetime']    = isset( $_POST['publish_datetime'] ) ? sanitize_text_field( wp_unslash( $_POST['publish_datetime'] ) ) : '';
 		$o['expiration_datetime'] = isset( $_POST['expiration_datetime'] ) ? sanitize_text_field( wp_unslash( $_POST['expiration_datetime'] ) ) : '';
+		$o['fixed_position']      = isset( $_POST['fixed_position'] ) ? 1 : 0;
 
 		update_option( 'site_banner_settings', $o );
 	}

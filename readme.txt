@@ -3,7 +3,7 @@ Contributors: bencoyourdesign
 Tags: banner, notification, announcement
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 
 Enable a sitewide banner for important notifications.
@@ -28,6 +28,12 @@ Features:
 3. Go to Site Banner in the left admin menu to configure
 
 == Changelog ==
+
+= 1.0.6 =
+* Reopen indicator now correctly accounts for the WordPress admin bar's real height (measured, not assumed) so it no longer sits hidden behind it when logged in.
+* Reopen indicator redesigned as a small triangular corner tab flush to the top-left, with a caret icon rotated to point down and to the right.
+* Added a new "Fix the banner to the top of the page" setting. When on, the banner and its collapsed indicator stay pinned to the top of the screen while scrolling and push the site's own fixed header down, with the admin bar and screen size accounted for automatically. When off (the default), everything sits in normal page flow and scrolls away as before.
+* Banner padding is now symmetric left and right, so centered banner text stays visually centered at every screen size instead of drifting left on mobile.
 
 = 1.0.5 =
 * Close button top offset reduced from 6px to 3px to vertically center it.

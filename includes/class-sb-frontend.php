@@ -44,6 +44,7 @@ class SB_Frontend {
 
 		wp_localize_script( 'sb-frontend', 'SiteBannerData', [
 			'cookieName' => 'sb_dismissed_' . $hash,
+			'fixed'      => ! empty( $o['fixed_position'] ),
 		] );
 	}
 
@@ -65,6 +66,7 @@ class SB_Frontend {
 		$o = sb_get_settings();
 
 		$has_link = ! empty( $o['link_url'] );
+		$fixed    = ! empty( $o['fixed_position'] );
 		$tag      = $has_link ? 'a' : 'div';
 		$attrs    = '';
 		if ( $has_link ) {
@@ -74,7 +76,7 @@ class SB_Frontend {
 			}
 		}
 		?>
-		<div id="sb-banner" class="sb-banner<?php echo $has_link ? ' sb-has-link' : ''; ?>" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>;" role="region" aria-label="Site notification">
+		<div id="sb-banner" class="sb-banner<?php echo $has_link ? ' sb-has-link' : ''; ?><?php echo $fixed ? ' sb-fixed' : ''; ?>" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>;" role="region" aria-label="Site notification">
 			<<?php echo $tag . $attrs; ?> class="sb-banner-inner">
 				<span class="sb-banner-content">
 					<?php if ( $o['title'] ) : ?>
@@ -93,7 +95,7 @@ class SB_Frontend {
 			</<?php echo $tag; ?>>
 			<div class="sb-banner-close" role="button" tabindex="0" aria-label="Close notification" style="color:<?php echo esc_attr( $o['text_color'] ); ?>;">&times;</div>
 		</div>
-		<div id="sb-reopen" class="sb-reopen" role="button" tabindex="0" aria-label="Show notification" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>; color:<?php echo esc_attr( $o['text_color'] ); ?>;">
+		<div id="sb-reopen" class="sb-reopen<?php echo $fixed ? ' sb-fixed' : ''; ?>" role="button" tabindex="0" aria-label="Show notification" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>; color:<?php echo esc_attr( $o['text_color'] ); ?>;">
 			<?php echo $this->caret_down_svg(); ?>
 		</div>
 		<?php
