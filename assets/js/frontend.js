@@ -21,7 +21,6 @@
 		var cookieName = ( window.SiteBannerData && window.SiteBannerData.cookieName ) || 'sb_dismissed';
 		var fixedMode  = !! ( window.SiteBannerData && window.SiteBannerData.fixed );
 		var closeBtn   = banner.querySelector( '.sb-banner-close' );
-		var REOPEN_HEIGHT = 46; // matches .sb-reopen's box height in frontend.css
 
 		// Divs, not buttons, on purpose (avoids inheriting a theme's global
 		// `button { ... }` reset styles). That means click still works out of
@@ -40,11 +39,10 @@
 
 		// The reopen indicator is always position:absolute or position:fixed
 		// (never normal flow), and neither of those automatically clears the
-		// WordPress admin bar the way normal-flow content does. So this
-		// always needs to measure the admin bar and offset for it, in both
-		// fixed and non-fixed banner modes. Reads the real height rather
-		// than assuming 32px/46px, so it adapts on its own at any screen
-		// size, including WordPress's own mobile admin bar breakpoint.
+		// WordPress admin bar the way normal-flow content does. This always
+		// measures the admin bar's real height rather than assuming one, so
+		// it self-corrects at any screen size, including the admin bar's own
+		// mobile breakpoint where it grows taller.
 		function adminBarOffset() {
 			var bar = document.getElementById( 'wpadminbar' );
 			if ( bar && window.getComputedStyle( bar ).position === 'fixed' ) {
@@ -57,11 +55,18 @@
 			if ( reopen ) reopen.style.top = adminBarOffset() + 'px';
 		}
 
-		// Fixed mode only: nudge any other fixed/sticky page elements pinned
-		// to the top down by the given offset, so the site's own header
-		// never sits hidden underneath the banner or the reopen indicator.
-		function adjustFixedElements( offset ) {
+		// Fixed mode only, and only while the full banner is showing (never
+		// for the small corner indicator, it's deliberately small enough not
+		// to need this). Pushes both (a) any other fixed/sticky page elements
+		// like a theme's own header, and (b) normal in-flow page content,
+		// down by the banner's real current height, so nothing ends up
+		// hidden underneath it. offset of 0 reverts everything back.
+		function pushPageContent( offset ) {
 			if ( ! fixedMode ) return;
+
+			document.documentElement.style.setProperty( '--sb-fixed-banner-height', offset + 'px' );
+			document.documentElement.classList.toggle( 'sb-fixed-active', offset > 0 );
+
 			var all = document.body.querySelectorAll( '*' );
 			for ( var i = 0; i < all.length; i++ ) {
 				var el = all[ i ];
@@ -88,8 +93,11 @@
 				banner.classList.add( 'sb-visible' );
 			} );
 			if ( fixedMode ) {
+				// Measure after the browser has actually laid the banner
+				// out (text wrap makes the real height a moving target),
+				// then reserve exactly that much space.
 				setTimeout( function () {
-					adjustFixedElements( banner.offsetHeight );
+					pushPageContent( banner.offsetHeight );
 				}, 60 );
 			}
 			if ( reopen ) reopen.style.display = 'none';
@@ -98,7 +106,7 @@
 		function hideBanner( animate ) {
 			function finish() {
 				banner.style.display = 'none';
-				adjustFixedElements( REOPEN_HEIGHT );
+				pushPageContent( 0 );
 				positionReopen();
 				if ( reopen ) reopen.style.display = 'block';
 			}
@@ -115,7 +123,7 @@
 
 		if ( getCookie( cookieName ) ) {
 			banner.style.display = 'none';
-			adjustFixedElements( REOPEN_HEIGHT );
+			pushPageContent( 0 );
 			positionReopen();
 			if ( reopen ) reopen.style.display = 'block';
 		} else {
@@ -143,10 +151,10 @@
 			if ( ! fixedMode ) return;
 			if ( banner.style.display !== 'none' ) {
 				banner.style.top = adminBarOffset() + 'px';
-				adjustFixedElements( banner.offsetHeight );
-			} else {
-				adjustFixedElements( REOPEN_HEIGHT );
+				pushPageContent( banner.offsetHeight );
 			}
+			// If the banner is hidden (indicator showing), there's nothing
+			// to re-push, pushPageContent(0) already applies from hideBanner.
 		} );
 	} );
 })();

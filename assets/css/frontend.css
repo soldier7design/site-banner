@@ -1,3 +1,14 @@
+/* Fixed mode only: reserves real space at the top of the document equal to
+   the banner's current rendered height, so normal page content (like a
+   theme header that isn't itself fixed/sticky) gets pushed down instead of
+   sitting hidden underneath the banner. JS keeps this in sync with the
+   banner's actual height, recalculated on resize since wrapped text can
+   make the banner taller at narrower widths. Not applied for the small
+   corner indicator, it's deliberately small enough not to need it. */
+html.sb-fixed-active {
+	padding-top: var(--sb-fixed-banner-height, 0px);
+}
+
 #sb-banner {
 	position: relative;
 	width: 100%;
@@ -37,6 +48,7 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	max-width: 100%;
+	text-align: center;
 	cursor: default;
 }
 
@@ -105,11 +117,11 @@ a.sb-banner-inner { cursor: pointer; }
 }
 .sb-reopen svg {
 	position: absolute;
-	top: 7px;
-	left: 7px;
-	width: 14px;
-	height: 14px;
-	transform: rotate(-45deg);
+	top: 8px;
+	left: 8px;
+	width: 16px;
+	height: 16px;
+	transform: rotate(45deg);
 }
 
 .sb-banner-close:focus,

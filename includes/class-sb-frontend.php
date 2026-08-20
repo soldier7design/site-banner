@@ -96,16 +96,12 @@ class SB_Frontend {
 			<div class="sb-banner-close" role="button" tabindex="0" aria-label="Close notification" style="color:<?php echo esc_attr( $o['text_color'] ); ?>;">&times;</div>
 		</div>
 		<div id="sb-reopen" class="sb-reopen<?php echo $fixed ? ' sb-fixed' : ''; ?>" role="button" tabindex="0" aria-label="Show notification" style="background:<?php echo esc_attr( $o['bg_color'] ); ?>; color:<?php echo esc_attr( $o['text_color'] ); ?>;">
-			<?php echo $this->caret_down_svg(); ?>
+			<?php echo $this->arrow_svg(); ?>
 		</div>
 		<?php
 	}
 
 	protected function arrow_svg() {
 		return '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-	}
-
-	protected function caret_down_svg() {
-		return '<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 	}
 }

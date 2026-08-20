@@ -3,7 +3,7 @@ Contributors: bencoyourdesign
 Tags: banner, notification, announcement
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 
 Enable a sitewide banner for important notifications.
@@ -28,6 +28,11 @@ Features:
 3. Go to Site Banner in the left admin menu to configure
 
 == Changelog ==
+
+= 1.0.7 =
+* Reopen indicator icon changed back to the arrow (rotated 45 degrees) instead of the caret, repositioned to sit better centered within the triangle.
+* Fixed banner text now stays centered when it wraps to multiple lines on narrow screens, instead of the wrapped lines defaulting to left-aligned.
+* Fixed mode now also pushes ordinary, non-fixed page content (like a theme header that isn't itself fixed or sticky) down by the banner's real height, not just other fixed/sticky elements. Recalculated on resize since text wrapping can change the banner's height, and the WordPress admin bar's height is always measured fresh rather than assumed. Only applies while the full banner is open, not for the small corner indicator.
 
 = 1.0.6 =
 * Reopen indicator now correctly accounts for the WordPress admin bar's real height (measured, not assumed) so it no longer sits hidden behind it when logged in.
