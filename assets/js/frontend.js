@@ -20,7 +20,6 @@
 
 		var cookieName = ( window.SiteBannerData && window.SiteBannerData.cookieName ) || 'sb_dismissed';
 		var closeBtn   = banner.querySelector( '.sb-banner-close' );
-		var reopenBox  = reopen ? reopen.querySelector( '.sb-reopen-box' ) : null;
 
 		// Divs, not buttons, on purpose (avoids inheriting a theme's global
 		// `button { ... }` reset styles). That means click still works out of
@@ -84,7 +83,7 @@
 		}
 
 		if ( reopen ) {
-			onActivate( reopenBox, function () {
+			onActivate( reopen, function () {
 				setCookie( cookieName, '', -1 );
 				showBanner();
 			} );

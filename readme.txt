@@ -2,8 +2,8 @@
 Contributors: bencoyourdesign
 Tags: banner, notification, announcement
 Requires at least: 5.9
-Tested up to: 6.6
-Stable tag: 1.0.2
+Tested up to: 7.1
+Stable tag: 1.0.4
 License: GPLv2 or later
 
 Enable a sitewide banner for important notifications.
@@ -28,6 +28,17 @@ Features:
 3. Go to Site Banner in the left admin menu to configure
 
 == Changelog ==
+
+= 1.0.4 =
+* Reopen indicator no longer sits in normal page flow, it's absolutely positioned and centered over the header at a low z-index so it never pushes content down.
+* Reopen indicator icon changed from an alert triangle to a megaphone.
+* Reopen indicator corners changed to round both bottom corners, with a little more horizontal padding.
+* Banner arrow icon nudged down 4px to vertically center it, and its left margin reduced from 10px to 7px.
+* Banner content line-height set to 22px.
+* Updated "Tested up to" to WordPress 7.1.
+
+= 1.0.3 =
+* Updated "Tested up to" to WordPress 7.0 to clear the compatibility warning on the plugin details screen.
 
 = 1.0.2 =
 * Banner and the reopen indicator are no longer fixed to the viewport. Both sit in normal page flow and scroll away with the rest of the page instead of staying pinned in place.

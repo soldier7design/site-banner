@@ -32,13 +32,19 @@
 
 a.sb-banner-inner { cursor: pointer; }
 
+.sb-banner-content {
+	line-height: 22px;
+}
+
 .sb-banner-title { font-weight: 700; }
 .sb-banner-sep { opacity: .85; }
 .sb-banner-text { font-weight: 400; }
 .sb-banner-arrow {
-	margin-left: 10px;
+	margin-left: 7px;
 	display: inline-flex;
 	align-items: center;
+	position: relative;
+	top: 4px;
 	transition: transform .15s ease;
 }
 .sb-banner-arrow svg {
@@ -65,32 +71,33 @@ a.sb-banner-inner { cursor: pointer; }
 }
 .sb-banner-close:hover { opacity: 1; }
 
-/* Reopen indicator: sits in normal document flow (not fixed), tucked flush
-   into the top-right corner, and scrolls away with the rest of the page. */
+/* Reopen indicator: absolutely positioned and centered over the header
+   instead of taking up its own row, so it never pushes page content down.
+   Low z-index on purpose, it's decorative and fine sitting under most
+   theme elements, it just needs to clear the plain background behind it. */
 .sb-reopen {
-	width: 100%;
 	display: none;
-	justify-content: flex-end;
-	box-sizing: border-box;
-}
-.sb-reopen-box {
-	display: flex;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
 	align-items: center;
 	justify-content: center;
-	padding: 4px 7px;
-	border-radius: 0 0 0 8px;
+	padding: 4px 10px;
+	border-radius: 0 0 8px 8px;
 	cursor: pointer;
 	user-select: none;
 	box-shadow: 0 1px 4px rgba(0,0,0,.12);
 }
-.sb-reopen-box svg {
+.sb-reopen svg {
 	width: 14px;
 	height: 14px;
 	display: block;
 }
 
 .sb-banner-close:focus,
-.sb-reopen-box:focus {
+.sb-reopen:focus {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 }
