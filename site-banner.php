@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Site Banner
  * Description: Enable a sitewide banner for important notifications.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Ben Coyour Design
  * License: GPL v2 or later
  * Text Domain: site-banner
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
-define( 'SB_VERSION', '1.0.4' );
+define( 'SB_VERSION', '1.0.5' );
 define( 'SB_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SB_URL', plugin_dir_url( __FILE__ ) );
 

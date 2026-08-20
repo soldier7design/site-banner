@@ -1,7 +1,7 @@
 #sb-banner {
 	position: relative;
 	width: 100%;
-	z-index: 999999;
+	z-index: 99;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -59,7 +59,7 @@ a.sb-banner-inner { cursor: pointer; }
 .sb-banner-close {
 	position: absolute;
 	right: 6px;
-	top: 6px;
+	top: 3px;
 	background: transparent;
 	border: none;
 	font-size: 20px;

@@ -3,7 +3,7 @@ Contributors: bencoyourdesign
 Tags: banner, notification, announcement
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 
 Enable a sitewide banner for important notifications.
@@ -28,6 +28,11 @@ Features:
 3. Go to Site Banner in the left admin menu to configure
 
 == Changelog ==
+
+= 1.0.5 =
+* Close button top offset reduced from 6px to 3px to vertically center it.
+* Reduced the banner's z-index from 999999 to 99.
+* Reopen indicator icon changed from a megaphone to a down-facing caret, to better suggest that clicking it slides the banner back down.
 
 = 1.0.4 =
 * Reopen indicator no longer sits in normal page flow, it's absolutely positioned and centered over the header at a low z-index so it never pushes content down.
