@@ -3,14 +3,14 @@ Contributors: bencoyourdesign
 Tags: banner, notification, announcement
 Requires at least: 5.9
 Tested up to: 6.6
-Stable tag: 1.0.0
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 Enable a sitewide banner for important notifications.
 
 == Description ==
 
-Site Banner adds a fixed, full-width notification bar to the top of any WordPress site.
+Site Banner adds a full-width notification bar to the top of any WordPress site.
 
 Features:
 * On/off toggle
@@ -18,11 +18,30 @@ Features:
 * Optional link, opens the whole banner as a clickable bar, with an arrow icon
 * Pulls global colors from Elementor automatically when available, plus a custom color picker
 * Optional scheduled display with a "Now" or specific publish date/time, and an expiration date that turns the banner off automatically at midnight
-* Visitors can close the banner. It collapses into a small reopen tab in the top right corner, remembered via cookie
-* Works with the WordPress admin bar and Elementor's editor, pushing page content down instead of overlapping it
+* Visitors can close the banner. It collapses into a small alert icon tucked into the top-right corner, remembered via cookie
+* Sits in normal page flow, not pinned to the viewport, so it scrolls away naturally as the visitor scrolls down
 
 == Installation ==
 
 1. Upload the site-banner folder to /wp-content/plugins/
 2. Activate through the Plugins screen
 3. Go to Site Banner in the left admin menu to configure
+
+== Changelog ==
+
+= 1.0.2 =
+* Banner and the reopen indicator are no longer fixed to the viewport. Both sit in normal page flow and scroll away with the rest of the page instead of staying pinned in place.
+* Reopen indicator redesigned: a compact alert-triangle icon, flush into the top-right corner with only the bottom-left corner rounded, smaller padding.
+* Replaced the text-character arrow on linked banners with a custom SVG arrow icon.
+* Removed the JavaScript that nudged other fixed page elements out of the way, no longer needed now that nothing on the banner is fixed.
+
+= 1.0.1 =
+* Close button and reopen indicator changed from native button elements to styled divs, so theme-level button style resets can no longer bleed into them.
+* Added keyboard support (Enter/Space) for the close and reopen controls to keep them accessible after the button-to-div change.
+
+= 1.0.0 =
+* Initial release.
+* On/off toggle, title, message text, optional clickable link.
+* Background, title, and text color pickers with automatic Elementor global color palette support.
+* Optional scheduled display with publish (now or scheduled) and expiration date/time.
+* Visitor dismiss with cookie memory, tied to the banner's content so edits reset the dismissal.
